@@ -1,7 +1,6 @@
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.util.Scanner;
 
 class Tictactoe {
 
@@ -14,8 +13,12 @@ class Tictactoe {
 	private static boolean isGameFinished = false;
 	private static int placedPieces = 0;
 
+	//	0 = nothing; 1 = player; 2 = computer
+	private static int[] boardSet = new int[9];
 	private static Board board;
 	private static Player player;
+	private static Piece playerPiece = new Piece('X');
+	private static Piece computerPiece = new Piece('O');
 
 	public static void main(String[] args) {
 		board = new Board();
@@ -23,9 +26,11 @@ class Tictactoe {
 
 		while (!isGameFinished) {
 			GameState winner = null;
-			playerTurn();
+			if(playerTurn) playerTurn();
+			else computerTurn();
 			if (placedPieces == 9)
 				finishGame(winner);
+			//takeOneTurn();
 		}
 	}
 
@@ -58,7 +63,36 @@ class Tictactoe {
 			e.printStackTrace();
 		}
 		position = Integer.parseInt(input);
-		board.placePiece(position, "Player");
+		board.placePiece(position, "Player", playerPiece);
+		boardSet[position-1] = 1;
+	}
+	
+	private static void computerTurn() {
+		clearSysout();
+		char[][] boardBackup = board.getBoard();
+		int position = 0;
+		
+		position = computerTurnHelper(0);
+		
+		if(position == 0) board.setBoard(boardBackup);
+		else System.out.println("TODO: PLACE RANDOM");
+		board.boardDisplay();
+		board.placePiece(position, "Cpu", playerPiece);
+	}
+	private static int computerTurnHelper(int position) {
+		if(getStateFromString(board.checkForWinner()) == GameState.ComputerWon) return position;
+		else {
+			for(int i = 0; i < boardSet.length; i++) {
+				if(boardSet[i] == 0) {
+					board.placePiece(i, "Cpu", computerPiece);
+					return computerTurnHelper(i);
+					
+				}
+				board.placePiece(i, "", new Piece(' '));
+			}
+			return 0;
+		}
+		
 	}
 	
 	private static void clearSysout() {
