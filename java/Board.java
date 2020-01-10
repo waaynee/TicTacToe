@@ -4,14 +4,16 @@ import java.util.List;
 
 class Board {
     private char[][] board = {  {' ', '|', ' ', '|', ' '},
-                                {'-', '+', '-', '+', '-'},
+                                {'—', '+', '—', '+', '—'},
                                 {' ', '|', ' ', '|', ' '},
-                                {'-', '+', '-', '+', '-'},
+                                {'—', '+', '—', '+', '—'},
                                 {' ', '|', ' ', '|', ' '},
                             };
 
     static ArrayList<Integer> playerPositions = new ArrayList<>();
     static ArrayList<Integer> cpuPositions = new ArrayList<>();
+    static Piece playerGamePiece;
+    static Piece cpuGamePiece;
 
     public Board() {
         boardDisplay();
@@ -28,17 +30,19 @@ class Board {
         }
     }
 
-    // Logic for placing pieces
-    public void placePiece(int position, String player) {
-        char gamePiece;
-
-        if(!player.equalsIgnoreCase("Cpu")) {
-            gamePiece = 'X';
-            playerPositions.add(position);
-        } else {
-            gamePiece = 'O';
-            playerPositions.add(position);
+    public void selectGamePiece(String choice) {
+        if(choice.equalsIgnoreCase("x")) {
+            playerGamePiece = new Piece('X');
+            cpuGamePiece = new Piece('O');
+        } else if(choice.equalsIgnoreCase("o")){
+            playerGamePiece = new Piece('O');
+            cpuGamePiece = new Piece('X');
         }
+    }
+
+    // Logic for placing pieces
+    public void placePiece(int position, String player, Piece selectedPiece) {
+        char gamePiece = selectedPiece.getGamePiece();
 
         switch(position) {
             case 1:
@@ -119,5 +123,4 @@ class Board {
         }
         return "";
     }
-
 }
