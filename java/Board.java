@@ -10,7 +10,7 @@ class Board {
                                 {' ', '|', ' ', '|', ' '},
                             };
 
-    static ArrayList<Integer> playerPositions = new ArrayList<>();
+	static ArrayList<Integer> playerPositions = new ArrayList<>();
     static ArrayList<Integer> cpuPositions = new ArrayList<>();
     static Piece playerGamePiece;
     static Piece cpuGamePiece;
@@ -123,4 +123,13 @@ class Board {
         }
         return "";
     }
+
+    char[][] getBoard() {
+		return board;
+	}
+
+
+	void setBoard(char[][] board) {
+		this.board = board;
+	}
 }
