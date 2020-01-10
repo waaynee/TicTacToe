@@ -11,15 +11,17 @@ class Tictactoe {
 
     public static void main(String[] args) {
         Board board = new Board();
+        Player playerOne = new Player();
         
-        /*while(!isGameFinished) {
+        while(!isGameFinished) {
             Winner winner = null;
             if(placedPieces == 9) finishGame(winner);
-        }*/
+        }
     }
 
     public static void takeOneTurn() {
         nextPlayer();
+        placedPieces++;
     }
 
     private static void nextPlayer() {
